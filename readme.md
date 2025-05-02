@@ -60,13 +60,13 @@ robot .
 To run a specific test case or file:
 
 ```bash
-robot -t "Scenario Three" tests.robot
+robot -t "Scenario Six" robot-tests/TestSuite.robot
 ```
 
 Or:
 
 ```bash
-robot tests.robot
+robot robot-tests/TestSuite.robot
 ```
 
 ---
