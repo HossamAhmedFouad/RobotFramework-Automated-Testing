@@ -1,5 +1,7 @@
 /robot-env
 /.vscode/
+/results
+/__macosx__/
 *.html
 *.png
 *.xml
