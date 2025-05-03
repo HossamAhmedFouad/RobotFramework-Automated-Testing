@@ -97,6 +97,8 @@ Scenario Six
     Wait Constant Time
     Wait Until Page Contains Element           css=#_full_container_header_23_ > div.pc-header--right--2cV7LB8 > div > div.pc-header--items--tL_sfQ4 > div.es--wrap--RYjm1RT > div.es--contentWrap--ypzOXHr.es--visible--12ePDdG.es--rtl--2-LcjOR > div.es--saveBtn--w8EuBuy       timeout=30s
     Click Element                              css=#_full_container_header_23_ > div.pc-header--right--2cV7LB8 > div > div.pc-header--items--tL_sfQ4 > div.es--wrap--RYjm1RT > div.es--contentWrap--ypzOXHr.es--visible--12ePDdG.es--rtl--2-LcjOR > div.es--saveBtn--w8EuBuy
+    # UNCOMMENT THE FOLLOWING LINE ENABLES PAGE TO REFRESH AND UPDATE CURRENCY FOR PRODUCTS BUT THATS NOT THE EXPECTED BEHAVIOR
+    # Reload Page
     Wait Constant Time
     ${discounted_prices}=    Get WebElements    css=span.iu_hs
     ${original_prices}=      Get WebElements    css=span.iu_ht
