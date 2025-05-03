@@ -1,4 +1,5 @@
 *** Settings ***
+
 Library           SeleniumLibrary
 Library           Collections
 Library           String
@@ -9,6 +10,9 @@ Suite Teardown    Close Browser
 ${URL}            https://www.aliexpress.com/
 ${SEARCH_TERM}    smart watch
 ${SLEEP_TIME}     2s
+@{passwords}      xxxxx
+@{emails}         naddaa26@gmail.com
+
 
 *** Test Cases ***
 Scenario One
@@ -41,12 +45,42 @@ Scenario Three
     Click Element                              css=a[href*="shoppingcart"]
     Run Keyword And Continue On Failure        Wait Until Page Contains    ${product_name}
 
+# Scenario Four
+#     Go To                            ${URL}
+#     Reset Browser State
+#     Close Popup
+#     Wait Until Element Is Visible    xpath=//*[@id="_full_container_header_23_"]/div[2]/div/div[2]/div[2]/div/div
+#     Click Element                    xpath=//*[@id="_full_container_header_23_"]/div[2]/div/div[2]/div[2]/div/div
+#     Sleep                            1s
+#     Click Element                    xpath=//*[@id="_full_container_header_23_"]/div[2]/div/div[2]/div[2]/div[2]/div[4]/div/div[1]/div
+#     Sleep                            1s
+#     Click Element                    xpath=//*[@id="_full_container_header_23_"]/div[2]/div/div[2]/div[2]/div[2]/div[4]/div/div[2]/div[2]
+#     Sleep                            1s
+#     Click Element                    xpath=//div[@class='es--saveBtn--w8EuBuy']
+#     Sleep                            4s
+#     Element Text Should Be           xpath=//span[@class='ship-to--small--1wG1oGl'] \ \ \                                                       EN/
+#     Sleep                            1s
 
-Scenario Four
-
-
-Scenario Five
-
+# Scenario Five
+#     Reset Browser State
+#     ${email}                         Set Variable                                                                                               ${emails}[0]
+#     Mouse Over                       xpath=//*[@id="_full_container_header_23_"]/div[2]/div/div[2]/div[3]
+#     Click Element                    xpath=//button[contains(@class, 'my-account--signin--')]
+#     Input Text                       xpath=//*[@id="batman-dialog-wrap"]/div/div/div/div[1]/div/div[3]/div[2]/div/span/span[1]/span[1]/input    ${email}
+#     Sleep                            1s
+#     Press Keys                       xpath=//*[@id="batman-dialog-wrap"]/div/div/div/div[1]/div/div[3]/div[2]/div/span/span[1]/span[1]/input    ENTER
+#     Wait Until Element Is Visible    xpath=//*[@id="fm-login-password"]
+#     Input Password                   xpath=//*[@id="fm-login-password"]                                                                         ${passwords}[0]
+#     Sleep                            2s
+#     Click Element                    xpath=//*[@id="batman-dialog-wrap"]/div/div/div/div[1]/div[9]/button
+#     Log                              Please solve the CAPTCHA manually within 15 seconds
+#     Sleep                            15s
+#     ${username}                      Evaluate                                                                                                   "${email.split('@')[0]}"
+#     Mouse Over                       xpath=//*[@id="_full_container_header_23_"]/div[2]/div/div[2]/div[3]
+#     Sleep                            2s
+#     ${header_text}                   Get Text                                                                                                   xpath=//div[@class='my-account--textCenter--2K0hniX']//p
+#     Should Contain                   ${header_text}                                                                                             ${username}
+#     Sleep                            1s
 
 Scenario Six
     Go To    ${URL}
@@ -95,3 +129,13 @@ Click Search Button
 
 Wait Constant Time
     Sleep    ${SLEEP_TIME}
+
+Reset Browser State
+    Delete All Cookies
+    Execute Javascript    window.localStorage.clear();
+    Execute Javascript    window.sessionStorage.clear();
+    Execute Javascript    location.reload(true)
+
+Close Popup
+    Wait Until Element Is Visible    xpath=//*[@id="_global_header_23_"]/div
+    Click Element                    css=img._24EHh
