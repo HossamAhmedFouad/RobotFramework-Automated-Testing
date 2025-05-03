@@ -12,13 +12,45 @@ ${SEARCH_TERM}    smart watch
 ${SLEEP_TIME}     2s
 @{passwords}      xxxxx
 @{emails}         naddaa26@gmail.com
+@{MIN_PRICE}      1000
+@{MAX_PRICE}      2000
 
 
 *** Test Cases ***
 Scenario One
+    Reset To Home Page
+    Search for an Item
+    Wait Constant Time
 
 
 Scenario Two
+    Reset To Home Page
+    Search for an Item
+    Wait Constant Time
+
+    # Set maximum price
+    Input Text      xpath=//input[@placeholder='حد أدنى']    100
+    # Set maximum price
+    Input Text      xpath=//input[@placeholder='حد أقصى']    500
+    
+    Click Element    xpath=//span[@class="hv_hy" and text()="OK"]
+    Wait Constant Time
+
+    #Get products cards
+    ${cards}=    Get WebElements    css:div.hm_bu.search-item-card-wrapper-gallery
+    ${length}=    Get Length    ${cards}
+
+    FOR    ${card}    IN    @{cards}
+        ${card_text}=    Get Text    ${card}
+        # Log    Card content: ${card_text}
+        ${matches}=    Get Regexp Matches    ${card_text}    EGP([0-9.]+)  
+        ${final_price_str}=    Get From List    ${matches}    0 
+        ${final_price}=    Replace String    ${final_price_str}    EGP    ${EMPTY}
+        ${price}=    Evaluate    float("${final_price}")
+        IF    ${price} < 100 or ${price} > 500
+            Fail    Price is out of range: ${price}
+        END
+    END
 
 
 Scenario Three
@@ -170,3 +202,13 @@ Reset Browser State
 Close Popup
     Wait Until Element Is Visible    xpath=//*[@id="_global_header_23_"]/div
     Click Element                    css=img._24EHh
+
+Reset To Home Page
+    Go To    ${URL}
+    Reset Browser State
+    Wait Constant Time
+    
+Search for an Item
+    Input Text      name=searchWords     ${SEARCH_TERM}
+    Click Button    css=div.pc-header--search--3hnHLKw input.search--submit--2VTbd-T.search--newSubmit--3BlVRKw
+    Wait Until Page Contains Element    id=card-list
